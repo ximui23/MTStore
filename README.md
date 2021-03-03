@@ -1,5 +1,6 @@
 # MTStore Using React & NodeJS, Full stack ecommerce web application.
-# MTStore products sell feng shui and semi precious gemstones from all around the world with the guarantee money back if the stone is not natural.
+
+MTStore products sell feng shui and semi precious gemstones from all around the world with the guarantee money back if the stone is not natural.
 
 Skills includes:
 - HTML5, CSS3
