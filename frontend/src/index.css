@@ -29,7 +29,7 @@ body{
 
 header{
   grid-area: header;
-  background-color: #e0b589;
+  background-color: #c3702f;
 }
 main{
   grid-area: main;
@@ -37,7 +37,7 @@ main{
 }
 footer{
   grid-area: footer;
-  background-color: #e0b589;
+  background-color: #c3702f;
   color: #ffffff;
 }
 /*Common */
@@ -55,6 +55,35 @@ a{
 a:hover{
   color: grey;
 }
+ul{
+  padding: 0;
+  margin: 10px;
+  list-style-type: none;
+}
+li{
+  margin-top: 1rem;
+}
+button{
+  padding: 1rem;
+  border-radius: 0.5rem;
+  border: 0.1rem #a4a4a4 solid;
+  font-size: 1.6rem;
+  font-family: Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #f8f8f8;
+  cursor: pointer;
+}
+button:hover{
+  border: 0.1rem #404040 solid;
+}
+button.primary{
+  background-color: #ffdc7f;
+}
+button.block{
+  width: 100%;
+}
+
 /* Header */
 header a{
   color: #ffffff;
@@ -75,6 +104,15 @@ a.brand {
 .row.center{
   justify-content: center;
 }
+.row.top{
+  align-items: flex-start;
+}
+.col-1{
+  flex: 1 1 25rem;
+}
+.col-2{
+  flex: 2 1 50rem;
+}
 /* Image */
 img{
   border-radius: 0.5rem;
@@ -83,7 +121,10 @@ img.medium{
   max-width: 29rem;
   width: 100%;
 }
-
+img.large{
+  width: 100%;
+  /* Responsive purpose */
+}
 /* Card */
 .card{
   border: 0.1rem #c0c0c0 solid;
@@ -107,4 +148,14 @@ img.medium{
 .rating span{
   color: #f0c040;
   margin: 0.1rem;
+}
+.rating span:last-child{
+  color: #404040;
+}
+/* Alert */
+.success{
+  color: #20a020;
+}
+.error{
+  color: #a02020;
 }
