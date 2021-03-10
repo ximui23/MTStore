@@ -1,4 +1,4 @@
-import { CART_ADD_ITEM } from "../constants/cartConstants";
+import { CART_ADD_ITEM, CART_REMOVE_ITEM } from "../constants/cartConstants";
 
 export const cartReducer = (state = {cartItems: []}, action) => {
     switch(action.type) {
@@ -28,6 +28,13 @@ export const cartReducer = (state = {cartItems: []}, action) => {
                     cartItems: [...state.cartItems, item] //this is concatenating current state of cartItems and new 'item'
                     //adding 'item' at the end ot cartItems array
                 };
+            }
+        case CART_REMOVE_ITEM:
+            return { ...state, 
+                //update cartItems
+                cartItems: state.cartItems.filter( x => x.product !== action.payload)
+                // filtering out the product that its id is == action.payload
+                // and remove that product from cartItems
             }
         default:
             return state;

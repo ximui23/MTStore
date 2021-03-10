@@ -1,5 +1,5 @@
 import Axios from "axios"
-import { CART_ADD_ITEM } from "../constants/cartConstants";
+import { CART_ADD_ITEM, CART_REMOVE_ITEM } from "../constants/cartConstants";
 
 export const addToCart = (productId, qty) => async(dispatch, getState) => {
     //dispatch and getState is from redux-thunk
@@ -24,4 +24,15 @@ export const addToCart = (productId, qty) => async(dispatch, getState) => {
     //preventing Cart is refreshing when we refresh the page
     localStorage.setItem('cartItems', JSON.stringify(getState().cart.cartItems));
 
+}
+
+//actions remove from cart
+export const removeFromCart = (productId) => (dispatch, getState) => {
+    dispatch({
+        type: CART_REMOVE_ITEM,
+        payload: productId
+    });
+
+    //update localStorage
+    localStorage.setItem('cartItems', JSON.stringify(getState().cart.cartItems));
 }
