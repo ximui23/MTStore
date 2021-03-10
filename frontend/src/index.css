@@ -103,6 +103,14 @@ a.brand {
   font-weight: bold;
   font-family: 'Sofia';
 }
+.badge{
+  background-color: brown;
+  color: #ffdcc2;
+  border-radius: 50%;
+  padding: 0.2rem 0.7rem;
+  font-size: 1.4rem;
+  margin-left: 0.2rem;
+}
 .row{
   display: flex;
   flex-wrap: wrap;
