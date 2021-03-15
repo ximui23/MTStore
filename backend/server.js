@@ -10,8 +10,8 @@ dotenv.config();
 
 const app = express();
 
-//Parse body of http req
-app.use(express.json());
+//Parse or converts body of http req
+app.use(express.json());    
 app.use(express.urlencoded({extended: true}));
 
 //connect to mongoose
