@@ -1,35 +1,41 @@
 // Create a simple Express server
 import express from 'express'
-import data from './data.js';
+import mongoose from 'mongoose'
+import dotenv from 'dotenv'
+import productRouter from './routers/productRouter.js';
+import userRouter from './routers/userRouter.js';
+
+
+dotenv.config();
 
 const app = express();
 
-// //api returns details of product
-// // ':id is the place holder for id of particular product
-app.get('/api/products/:id', (req,res) => {
-    //req.params.id is the same as :id which user input it in,
-    //and we check if that id match with _id that we have in the backend
-    const product = data.products.find((x) => x._id === req.params.id);
-    console.log(product);
-    if(product){
-        //if the id matches -> product exist
-        res.send(product);
-    }
-    else{
-        //if product does not exist, send error 404 and message to frontend
-        res.status(404).send({message: 'Product not Found'});
-    }
+//Parse body of http req
+app.use(express.json());
+app.use(express.urlencoded({extended: true}));
+
+//connect to mongoose
+//connect to MongoDB database
+//if process.env.MONGODBURL does not exist, use 'mongodb://localhost/mtstore'
+mongoose.connect(process.env.MONGODB_URL || 'mongodb://localhost/mtstore', {
+    //options
+    useNewUrlParser: true, //get rid of duplicated warnings
+    useUnifiedTopology: true,
+    useCreateIndex: true
 });
 
-//When frontend enter /api/products
-// return an array of products
-app.get('/api/products', (rep, res) => {
-    res.send(data.products);
-});
+app.use('/api/users', userRouter);
+
+//send data from mongoDB database
+app.use('/api/products', productRouter);
 
 app.get('/', (req, res) => {
     // body of handler, req = request, res = response
     res.send('Server is ready');
+});
+
+app.use((err, req, res, next) => {
+    res.status(500).send({message: err.message});
 });
 
 //if there is environment port then set it to port

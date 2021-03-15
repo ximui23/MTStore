@@ -1,7 +1,23 @@
+import bcrypt from 'bcryptjs'
 const data = {
+    users: [
+        {
+            //first user
+            name: 'Mai',
+            email: 'admin@example.com',
+            password: bcrypt.hashSync('1234', 8),
+            isAdmin: true,
+        },
+        {
+            //second user
+            name: 'Jeanny',
+            email: 'user@example.com',
+            password: bcrypt.hashSync('1234', 8),
+            isAdmin: false,
+        },
+    ],
     products: [
         {
-            _id:'1',
             name:'Citrine Bracelet',
             category:'Bracelet',
             image:'/images/citrine.jpg',
@@ -12,7 +28,6 @@ const data = {
             description: '8mm Round Bead Citrine Bracelet'
         },
         {
-            _id:'2',
             name:'Beryl Bracelet',
             category:'Bracelet',
             image:'/images/Beryl.jpeg',
@@ -23,7 +38,6 @@ const data = {
             description: '8mm Round Bead Multicolor Beryl Bracelet'
         },
         {
-            _id:'3',
             name:'Tourmaline',
             category:'Bracelet',
             image:'/images/tourmaline.jpg',
@@ -34,7 +48,6 @@ const data = {
             description: '8mm Round Bead Multicolor Tourmaline Bracelet'
         },
         {
-            _id:'4',
             name:'Indian Agate Bracelet',
             category:'Bracelet',
             image:'/images/indianAgate.jpg',
@@ -45,7 +58,6 @@ const data = {
             description: '8mm Round Bead Indian Agate Bracelet'
         },
         {
-            _id:'5',
             name:'Labradorite',
             category:'Bracelet',
             image:'/images/labradorite.jpg',
@@ -56,7 +68,6 @@ const data = {
             description: '7mm Round Bead Blue Flash Labradorite Bracelet'
         },
         {
-            _id:'6',
             name:'Orange Jade',
             category:'Bracelet',
             image:'/images/orangeJade.jpg',

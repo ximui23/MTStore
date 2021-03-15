@@ -5,7 +5,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start":"nodemon --watch backend --exec node --experimental-modules backend/server.js"  },
+    "start": "nodemon --watch backend --exec node --experimental-modules backend/server.js"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ximui23/MTStore.git"
@@ -17,7 +18,12 @@
   },
   "homepage": "https://github.com/ximui23/MTStore#readme",
   "dependencies": {
-    "express": "^4.17.1"
+    "bcryptjs": "^2.4.3",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-async-handler": "^1.1.4",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.11.19"
   },
   "devDependencies": {
     "nodemon": "^2.0.7"
