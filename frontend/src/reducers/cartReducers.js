@@ -1,4 +1,4 @@
-import { CART_ADD_ITEM, CART_REMOVE_ITEM } from "../constants/cartConstants";
+import { CART_ADD_ITEM, CART_REMOVE_ITEM, CART_SAVE_SHIPPING_ADDRESS } from "../constants/cartConstants";
 
 export const cartReducer = (state = {cartItems: []}, action) => {
     switch(action.type) {
@@ -36,6 +36,11 @@ export const cartReducer = (state = {cartItems: []}, action) => {
                 // filtering out the product that its id is == action.payload
                 // and remove that product from cartItems
             }
+        case CART_SAVE_SHIPPING_ADDRESS:
+            return { ...state,  //keep previous state
+            // but update shipping address
+            shippingAddress: action.payload
+            };
         default:
             return state;
     }

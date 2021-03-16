@@ -18,6 +18,9 @@ const initialState = {
         cartItems: localStorage.getItem('cartItems')    // value is saved inside localStorage is String
         ? JSON.parse(localStorage.getItem('cartItems')) // use JSON.parse to parse it into array
         : [],                   //if cartItems does not exist return empty array.
+        shippingAddress: localStorage.getItem('shippingAddress') //check if shippingAddress exist in localStorage
+        ? JSON.parse(localStorage.getItem('shippingAddress')) // if it exists converts it into JS object using JSON parse
+        : {} //otherwise use empty object,
     }
 };
 const reducer = combineReducers({

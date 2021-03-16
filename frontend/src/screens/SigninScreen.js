@@ -79,7 +79,7 @@ export default function SigninScreen(props) {
                     <button className="primary" type="submit">Sign In</button>
                 </div>
                 <div>
-                    {/* Redirect user to  Register Screen if they are new customers*/}
+                    {/* Redirect user to  Register Screen if they are new customers */}
                     <label />
                     <div>
                         New Customer? {' '}
