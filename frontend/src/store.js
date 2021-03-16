@@ -20,7 +20,8 @@ const initialState = {
         : [],                   //if cartItems does not exist return empty array.
         shippingAddress: localStorage.getItem('shippingAddress') //check if shippingAddress exist in localStorage
         ? JSON.parse(localStorage.getItem('shippingAddress')) // if it exists converts it into JS object using JSON parse
-        : {} //otherwise use empty object,
+        : {}, //otherwise use empty object,
+        paymentMethod: 'PayPal', //default value of paymentMethod is PayPal
     }
 };
 const reducer = combineReducers({
