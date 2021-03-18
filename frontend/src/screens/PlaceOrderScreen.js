@@ -1,7 +1,11 @@
-import React from 'react'
-import { useSelector } from 'react-redux'
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom';
+import { createOrder } from '../actions/orderActions';
 import CheckoutSteps from '../components/CheckoutSteps'
+import { ORDER_CREATE_RESET } from '../constants/orderConstants';
+import LoadingBox from '../components/LoadingBox'
+import MessageBox from '../components/MessageBox'
 
 export default function PlaceOrderScreen(props) {
     const cart = useSelector(state => state.cart);
@@ -10,15 +14,31 @@ export default function PlaceOrderScreen(props) {
         //if user did not select payment method, redirect them to payment screen
         props.history.push('/payment');
     }
+    const orderCreate = useSelector(state => state.orderCreate);
+    const { loading, success, error, order } = orderCreate;
+
     const toPrice = (num) => Number(num.toFixed(2)); // 5.123 => "5.12" => 5.12
     cart.itemsPrice = toPrice(cart.cartItems.reduce((a, c) => a + c.qty * c.price, 0));
     cart.shippingPrice = cart.itemsPrice > 100 ? toPrice(0) : toPrice(10); //if below $100 shipping is $10 
     cart.taxPrice = toPrice(0.15 * cart.itemsPrice); //tax = 15%
     cart.totalPrice = cart.itemsPrice + cart.shippingPrice + cart.taxPrice;
 
+    const dispatch = useDispatch();
+
     const placeOrderHandler = () => {
-        //todo: dispatch place order action
+        dispatch(createOrder({ ...cart, orderItems: cart.cartItems })); //use all fields of cart object "...cart"
+        // then change cartItems (frontend) to orderItems(backend)
     };
+
+    //if 'success' from orderCreate is true, this function will run
+    useEffect(() => {
+        if (success) {
+            //order is created successfully -> redirect user to order details screen
+            props.history.push(`/order/${order._id}`);
+            //reseting orderCreate
+            dispatch({ type: ORDER_CREATE_RESET });
+        }
+    }, [dispatch, order, props.history, success]);
 
     return (
         <div>
@@ -42,7 +62,7 @@ export default function PlaceOrderScreen(props) {
                             <div className="card card-body">
                                 <h2>Payment</h2>
                                 <p>
-                                    <strong>Method:</strong> {cart.shippingAddress.fullName} <br />
+                                    <strong>Method: </strong>{cart.paymentMethod} <br />
                                 </p>
                             </div>
                         </li>
@@ -108,6 +128,9 @@ export default function PlaceOrderScreen(props) {
                                     disabled={cart.cartItems.length === 0} //we do not handle empty order
                                 >Place Order</button>
                             </li>
+                            {/* conditional rendering */}
+                            {loading && <LoadingBox></LoadingBox>}
+                            {error && <MessageBox variant="danger">{error}</MessageBox>}
                         </ul>
                     </div>
                 </div>

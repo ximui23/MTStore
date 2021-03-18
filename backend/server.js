@@ -4,6 +4,7 @@ import mongoose from 'mongoose'
 import dotenv from 'dotenv'
 import productRouter from './routers/productRouter.js';
 import userRouter from './routers/userRouter.js';
+import orderRouter from './routers/orderRouter.js';
 
 
 dotenv.config();
@@ -11,8 +12,8 @@ dotenv.config();
 const app = express();
 
 //Parse or converts body of http req
-app.use(express.json());    
-app.use(express.urlencoded({extended: true}));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 //connect to mongoose
 //connect to MongoDB database
@@ -29,13 +30,16 @@ app.use('/api/users', userRouter);
 //send data from mongoDB database
 app.use('/api/products', productRouter);
 
+//path for /api/orders
+app.use('/api/orders', orderRouter);
+
 app.get('/', (req, res) => {
     // body of handler, req = request, res = response
     res.send('Server is ready');
 });
 
 app.use((err, req, res, next) => {
-    res.status(500).send({message: err.message});
+    res.status(500).send({ message: err.message });
 });
 
 //if there is environment port then set it to port
