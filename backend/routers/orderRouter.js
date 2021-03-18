@@ -30,4 +30,16 @@ orderRouter.post(
         }
     }));
 
+// /api/orders/:id, isAuth -> only authenticated user can see order detail
+orderRouter.get('/:id', isAuth, expressAsyncHandler(async (req, res) => {
+    // req.params.id is the ':id' - what user enter
+    const order = await Order.findById(req.params.id);  //findById is a method from mongoose
+    if (order) {
+        res.send(order);
+    }
+    else {
+        res.status(404).send({ message: 'Order Not Found' });
+    }
+}));
+
 export default orderRouter;
