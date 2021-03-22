@@ -33,6 +33,11 @@ app.use('/api/products', productRouter);
 //path for /api/orders
 app.use('/api/orders', orderRouter);
 
+//get the paypal client id from backend and send it to frontend
+app.get('/api/config/paypal', (req, res) => {
+    res.send(process.env.PAYPAL_CLIENT_ID || 'sb'); // 'sb' - sandbox
+})
+
 app.get('/', (req, res) => {
     // body of handler, req = request, res = response
     res.send('Server is ready');
