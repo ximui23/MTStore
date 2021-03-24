@@ -5,6 +5,13 @@ import { isAuth } from '../utils.js';
 
 const orderRouter = express.Router();
 
+//get orders from backend and send to frontend
+//only authenticated user can access - sign in user
+orderRouter.get('/mine', isAuth, expressAsyncHandler(async (req, res) => {
+    const orders = await Order.find({ user: req.user._id });
+    res.send(orders);
+}));
+
 //create API for post request to /api/order
 // '/' root is /api/orders
 orderRouter.post(
