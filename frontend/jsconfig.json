@@ -1,0 +1,9 @@
+{
+    // This config for auto import functionality in react project
+    "compilerOptions": {
+        "target": "es6"
+    },
+    "exclude": [
+        "node_modules"
+    ]
+}
