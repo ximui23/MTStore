@@ -3,7 +3,7 @@ import expressAsyncHandler from 'express-async-handler';
 import bcrypt from 'bcryptjs'
 import data from '../data.js';
 import User from '../models/userModel.js';
-import { generateToken } from '../utils.js';
+import { generateToken, isAuth } from '../utils.js';
 
 const userRouter = express.Router();
 
@@ -74,6 +74,33 @@ userRouter.get('/:id', expressAsyncHandler(async (req, res) => {
     }
     else {
         res.status(404).send({ message: 'User Not Found' });
+    }
+}));
+
+userRouter.put('/profile', isAuth, expressAsyncHandler(async (req, res) => {
+    //get user from database
+    //req.user._id == id of log in user
+    const user = await User.findById(req.user._id);
+    if (user) {
+        //update user's name with new name (req.body.name)
+        // if user enter empty string -> replace it with the user.name inside database
+        user.name = req.body.name || user.name;
+        user.email = req.body.email || user.email;
+        //check if password has been passed
+        if (req.body.password) {
+            //if it passed then user password should be encrypted
+            user.password = bcrypt.hashSync(req.body.password, 8);
+        }
+        //save updated user
+        const updatedUser = await user.save();
+        //send the user info to front end after saving
+        res.send({
+            _id: updatedUser._id,
+            name: updatedUser.name,
+            email: updatedUser.email,
+            isAdmin: updatedUser.isAdmin,
+            token: generateToken(updatedUser),
+        })
     }
 }));
 
