@@ -44,3 +44,15 @@ export const isAuth = (req, res, next) => {
         res.status(401).send({ message: 'No Token' });
     }
 };
+
+//function to authenticate only admin user
+export const isAdmin = (req, res, next) => {
+    if (req.user && req.user.isAdmin) {
+        //if user exist and this user is Admin
+        // move to the next middleware
+        next();
+    }
+    else {
+        res.status(401).send({ message: 'Invalid Admin Token' });
+    }
+};
