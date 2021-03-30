@@ -1,5 +1,5 @@
 import Axios from "axios";
-import { PRODUCT_CREATE_FAIL, PRODUCT_CREATE_REQUEST, PRODUCT_CREATE_SUCCESS, PRODUCT_DETAILS_FAIL, PRODUCT_DETAILS_REQUEST, PRODUCT_DETAILS_SUCCESS, PRODUCT_LIST_FAIL, PRODUCT_LIST_REQUEST, PRODUCT_LIST_SUCCESS, PRODUCT_UPDATE_FAIL, PRODUCT_UPDATE_REQUEST, PRODUCT_UPDATE_SUCCESS } from "../constants/productConstants"
+import { PRODUCT_CREATE_FAIL, PRODUCT_CREATE_REQUEST, PRODUCT_CREATE_SUCCESS, PRODUCT_DELETE_FAIL, PRODUCT_DELETE_REQUEST, PRODUCT_DELETE_SUCCESS, PRODUCT_DETAILS_FAIL, PRODUCT_DETAILS_REQUEST, PRODUCT_DETAILS_SUCCESS, PRODUCT_LIST_FAIL, PRODUCT_LIST_REQUEST, PRODUCT_LIST_SUCCESS, PRODUCT_UPDATE_FAIL, PRODUCT_UPDATE_REQUEST, PRODUCT_UPDATE_SUCCESS } from "../constants/productConstants"
 
 export const listProducts = () => async (dispatch) => {
     dispatch({
@@ -79,5 +79,25 @@ export const updateProduct = (product) => async (dispatch, getState) => {
             ? error.response.data.message
             : error.message;
         dispatch({ type: PRODUCT_UPDATE_FAIL, error: message });
+    }
+};
+
+export const deleteProduct = (productId) => async (dispatch, getState) => {
+    dispatch({ type: PRODUCT_DELETE_REQUEST, payload: productId });
+
+    const { userSignin: { userInfo } } = getState();
+
+    try {
+        // eslint-disable-next-line
+        const { data } = Axios.delete(`/api/products/${productId}`,
+            {
+                headers: { Authorization: `Bearer ${userInfo.token}` }
+            });
+        dispatch({ type: PRODUCT_DELETE_SUCCESS });
+    } catch (error) {
+        const message = error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message;
+        dispatch({ type: PRODUCT_DELETE_FAIL, payload: message });
     }
 };
