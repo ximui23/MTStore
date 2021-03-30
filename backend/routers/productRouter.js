@@ -32,6 +32,7 @@ productRouter.get('/:id', expressAsyncHandler(async (req, res) => {
 }));
 
 //post request because we create a resource in backend
+// /api/products
 productRouter.post('/', isAuth, isAdmin, expressAsyncHandler(async (req, res) => {
     const product = new Product({
         name: 'sample name' + Date.now(),
