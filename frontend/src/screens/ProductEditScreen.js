@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { detailsProduct } from '../actions/productActions';
+import { detailsProduct, updateProduct } from '../actions/productActions';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
+import { PRODUCT_UPDATE_RESET } from '../constants/productConstants';
 
 export default function ProductEditScreen(props) {
     const productId = props.match.params.id;
@@ -18,11 +19,19 @@ export default function ProductEditScreen(props) {
     const productDetails = useSelector(state => state.productDetails);
     const { loading, error, product } = productDetails;
 
+    const productUpdate = useSelector(state => state.productUpdate);
+    const { loading: loadingUpdate, error: errorUpdate, success: successUpdate } = productUpdate;
     //dispatch details product -> useEffect
     useEffect(() => {
-        if (!product || (product._id !== productId)) {
+        if (successUpdate) {
+            //if successfully update product -> redirect user to product list
+            dispatch({ type: PRODUCT_UPDATE_RESET });
+            props.history.push('/productList');
+        }
+        if (!product || (product._id !== productId) || successUpdate) {
             //if product is null => we did not load product
             //so we need to load it from back end
+            dispatch({ type: PRODUCT_UPDATE_RESET });
             dispatch(detailsProduct(productId));
         }
         else {
@@ -36,17 +45,24 @@ export default function ProductEditScreen(props) {
             setDescription(product.description);
         }
     }, [
-        product, productId, dispatch,    //when there is a change in each of these variables -> useEffect will run again
+        product, productId, dispatch, props.history, successUpdate   //when there is a change in each of these variables -> useEffect will run again
 
     ]);
 
     const submitHandler = (e) => {
         e.preventDefault();
+
+        dispatch(updateProduct({
+            _id: productId,
+            name, price, image, category, countInStock, description
+        }));
     }
     return (
         <div>
             <form className="form" onSubmit={submitHandler}>
                 <div><h1>Edit Product {productId}</h1></div>
+                {loadingUpdate && <LoadingBox></LoadingBox>}
+                {errorUpdate && <MessageBox variant="danger">{errorUpdate}</MessageBox>}
                 {loading ? <LoadingBox></LoadingBox>
                     :
                     error ? <MessageBox variant="danger">{error}</MessageBox>
