@@ -1,9 +1,17 @@
 import express from 'express';
 import expressAsyncHandler from 'express-async-handler';
 import Order from '../models/orderModel.js';
-import { isAuth } from '../utils.js';
+import { isAuth, isAdmin } from '../utils.js';
 
 const orderRouter = express.Router();
+
+//list of orders api for admin user.
+orderRouter.get('/', isAuth, isAdmin, expressAsyncHandler(async (req, res) => {
+    //admin -> get all orders
+    const orders = await Order.find({}).populate('user', 'name');
+    //use populate: from 'user' only get the 'name' of user
+    res.send(orders);
+}));
 
 //get orders from backend and send to frontend
 //only authenticated user can access - sign in user
@@ -70,6 +78,6 @@ orderRouter.put('/:id/pay', isAuth, expressAsyncHandler(async (req, res) => {
         res.status(404).send({ message: 'Order Not Found' });
     }
 
-}))
+}));
 
 export default orderRouter;
