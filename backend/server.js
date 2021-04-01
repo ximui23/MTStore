@@ -47,7 +47,7 @@ const __dirname = path.resolve();
 //join the current directory name with '/uploads'
 app.use('/uploads', express.static(path.join(__dirname, '/uploads')));
 
-//serve all files inside build folder
+//serve all files inside build folder in frontend
 app.use(express.static(path.join(__dirname, '/frontend/build')));
 //serve all addresses by index.html
 app.get('*', (req, res) => res.sendFile(path.join(__dirname, '/frontend/build/index.html')));
