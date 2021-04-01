@@ -47,10 +47,16 @@ const __dirname = path.resolve();
 //join the current directory name with '/uploads'
 app.use('/uploads', express.static(path.join(__dirname, '/uploads')));
 
-app.get('/', (req, res) => {
-    // body of handler, req = request, res = response
-    res.send('Server is ready');
-});
+//serve all files inside build folder
+app.use(express.static(path.join(__dirname, '/frontend/build')));
+//serve all addresses by index.html
+app.get('*', (req, res) => res.sendFile(path.join(__dirname, '/frontend/build/index.html')));
+
+//These lines are replaced with lines 50 - 53
+// app.get('/', (req, res) => {
+//     // body of handler, req = request, res = response
+//     res.send('Server is ready');
+// });
 
 app.use((err, req, res, next) => {
     res.status(500).send({ message: err.message });

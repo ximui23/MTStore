@@ -70,4 +70,4 @@ export const userUpdateProfileReducer = (state = {}, action) => {
         default:
             return state;
     }
-}
+};
