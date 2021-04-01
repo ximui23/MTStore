@@ -92,5 +92,23 @@ orderRouter.delete('/:id', isAuth, isAdmin, expressAsyncHandler(async (req, res)
     }
 }));
 
+//route for admin user handle order delivery 
+orderRouter.put('/:id/deliver', isAuth, isAdmin, expressAsyncHandler(async (req, res) => {
+    const order = await Order.findById(req.params.id);
+    if (order) {
+        //if order exist
+        order.isDelivered = true;
+        order.deliveredAt = Date.now();
+
+        //save the updated order
+        const updatedOrder = await order.save();
+        res.send({ message: 'Order Delivered', order: updatedOrder }); //second parameter: send back the order to frontend
+    }
+    else {
+        res.status(404).send({ message: 'Order Not Found' });
+    }
+
+}));
+
 
 export default orderRouter;
