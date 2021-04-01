@@ -41,9 +41,14 @@ function App() {
             <Link className="brand" to="/">MTFengShui</Link>
           </div>
           <div>
-            <Link to="/cart">
-              Cart
-                {/* Contional Rendering Section */}
+            <Link className="navbar" to="/">Home</Link>
+            <Link className="navbar" to="/about">About</Link>
+            <Link className="navbar" >Products</Link>
+          </div>
+          <div>
+            <Link className="navbar" to="/cart">
+              <i class="fa fa-shopping-cart"></i>
+              {/* Contional Rendering Section */}
               {cartItems.length > 0 && (
                 //if cartItems.length > 0 then render this
                 <span className="badge">{cartItems.length}</span>
@@ -72,7 +77,7 @@ function App() {
 
               ) :
                 //else render Sign In
-                <Link to="/signin">Sign In</Link>
+                <Link to="/signin" className="navbar">Sign In</Link>
             }
             {/* If user exist and user is adming then */}
             {userInfo && userInfo.isAdmin &&
@@ -98,6 +103,7 @@ function App() {
                 </div>
               )}
           </div>
+
         </header>
         <main>
           <Route path="/cart/:id?" component={CartScreen}></Route>
