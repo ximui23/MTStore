@@ -18,6 +18,7 @@ import ProfileScreen from './screens/ProfileScreen';
 import RegisterScreen from './screens/RegisterScreen';
 import ShippingAddressScreen from './screens/ShippingAddressScreen';
 import SigninScreen from './screens/SigninScreen';
+import UserListScreen from './screens/UserListScreen';
 
 function App() {
 
@@ -40,10 +41,10 @@ function App() {
           <div>
             <Link className="brand" to="/">MTFengShui</Link>
           </div>
-          <div>
-            <Link className="navbar" to="/">Home</Link>
-            <Link className="navbar" to="/about">About</Link>
-            <Link className="navbar" >Products</Link>
+          <div className="navbar">
+            <Link to="/">Home</Link>
+            <Link to="/about">About</Link>
+            <Link>Products</Link>
           </div>
           <div>
             <Link className="navbar" to="/cart">
@@ -118,6 +119,7 @@ function App() {
           <Route path="/orderhistory" component={OrderHistoryScreen}></Route>
           <AdminRoute path="/productlist" component={ProductListScreen}></AdminRoute>
           <AdminRoute path="/orderlist" component={OrderListScreen}></AdminRoute>
+          <AdminRoute path="/userlist" component={UserListScreen}></AdminRoute>
           <PrivateRoute path="/profile" component={ProfileScreen}></PrivateRoute>
           <Route path="/" component={HomeScreen} exact></Route>
         </main>

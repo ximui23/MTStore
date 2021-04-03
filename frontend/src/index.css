@@ -44,8 +44,9 @@ footer{
 }
 /*Common */
 h1{
-  font-size: 1.8rem;
+  font-size: 2rem;
   padding: 1rem 0;
+  padding-left: 5rem;
 }
 h2{
   font-size: 1.6rem;
@@ -88,7 +89,7 @@ button:hover{
   border: 0.1rem #404040 solid;
 }
 button.primary{
-  background-color: #B0C4DE;
+  background-color: #CCCCFF;
   border: none;
 }
 button.block{
@@ -128,6 +129,7 @@ a.brand {
   justify-content: center;
 }
 .row.top{
+  padding-top: 3rem;
   align-items: flex-start;
 }
 .col-1{
@@ -152,7 +154,8 @@ img.medium{
   width: 100%;
 }
 img.large{
-  width: 100%;
+  width:90%;
+  padding-left: 2rem;
   /* Responsive purpose */
 }
 /* Card */
@@ -160,11 +163,11 @@ img.large{
   border: 0.1rem #c0c0c0 solid;
   background-color: #f8f8f8;
   border-radius: 0.5rem;
-  margin: 1rem;
+  margin: 2rem;
 }
 
 .card-body{
-  padding: 1rem;
+  padding: 2rem;
 }
 
 .card-body > * {
@@ -260,7 +263,8 @@ img.large{
 }
 /* Table */
 .table{
-  width: 100%;
+  margin-left: 10rem;
+  width: 90%;
   border-collapse: collapse;
 }
 /* table body - table row - odd row */
@@ -270,7 +274,7 @@ img.large{
 .table td, .table th{
   text-align: left;
   border: 0.1rem solid #e4e4e4;
-  padding: 0.5rem;
+  padding: 0.8rem;
 }
 .table button{
   margin: 0 0.2rem;
@@ -302,4 +306,36 @@ img.large{
 
 .navbar:hover::after{
   width: 70%;
+}
+
+.emm{
+  padding-left: 5rem;
+}
+.add-product{
+  padding-top: 5rem;
+  padding-left: 60rem;
+  padding-bottom: 2rem;
+}
+.add-more-btn{
+  background-color:#CCCCFF;
+  width: 25rem;
+  border: none;
+  padding: 2rem;
+}
+.empty-cart{
+  padding-left: 60rem;
+}
+.empty-button{
+  padding: 2rem;
+  width: 25rem;
+  background-color: #FADBD8;
+  border: none;
+  color: #a02020;
+
+}
+.shopping-cart-header{
+  padding-left: 3rem;
+}
+.cart-product{
+  padding: 2rem;
 }

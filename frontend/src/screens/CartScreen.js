@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { addToCart, removeFromCart } from '../actions/cartActions';
 import MessageBox from '../components/MessageBox';
+import { CART_EMPTY } from '../constants/cartConstants';
 
 export default function CartScreen(props) {
     const productId = props.match.params.id;
@@ -31,20 +32,24 @@ export default function CartScreen(props) {
         props.history.push('/signin?redirect=shipping');
     }
 
+    const emptyCartHandler = () => {
+        dispatch({ type: CART_EMPTY });
+    }
+
     return (
         <div className="row top">
             <div className="col-2">
-                <h1>Shopping Cart</h1>
+                <h1 className="shopping-cart-header">Shopping Cart</h1>
                 {cartItems.length === 0 ? <MessageBox>
                     Cart is empty.
-                    <Link to="/">Add Some Items</Link>
+                    <Link to="/" className="emm">Please Add Some Items <i class="fa fa-cart-plus"></i></Link>
                 </MessageBox>
                     :
                     (
                         <ul>
                             {
                                 cartItems.map((item) => (
-                                    <li key={item.product}>
+                                    <li key={item.product} className="cart-product">
                                         <div className="row">
                                             <div>
                                                 <img src={item.image} alt={item.name} className="small"></img>
@@ -79,14 +84,20 @@ export default function CartScreen(props) {
                                 ))
                             }
                             <div className="add-product">
-                                <Link to="/">Adding more...?</Link>
+                                <Link to="/"><button className="add-more-btn">
+                                    Add more <span /><i class="fa fa-cart-plus"></i>
+                                </button>
+                                </Link>
+                            </div>
+                            <div className="empty-cart">
+                                <button onClick={emptyCartHandler} className="empty-button">Empty Cart </button>
                             </div>
                         </ul>
                     )};
             </div>
             <div className="col-1">
                 <div className="card cart-body">
-                    <ul>
+                    <ul >
                         <li>
                             <h2>
                                 Subtotal ({cartItems.reduce((a, c) => a + c.qty, 0)} items) : $
