@@ -40,7 +40,7 @@ function App() {
       <div className="grid-container">
         <header className="row">
           <div>
-            <Link className="brand" to="/">MTFengShui</Link>
+            <Link className="brand" to="/">Mia's</Link>
           </div>
           <div className="navbar">
             <Link to="/">Home</Link>

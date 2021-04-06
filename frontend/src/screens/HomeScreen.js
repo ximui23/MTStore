@@ -16,7 +16,8 @@ export default function HomeScreen() {
 
     useEffect(() => {
         dispatch(listProducts());
-    }, [dispatch])
+    }, [dispatch]);
+
     return (
         <div>
             {/* If loading is true -> LoadingBox */}
