@@ -20,6 +20,7 @@ export default function HomeScreen() {
 
     return (
         <div>
+            <h2>Featured Products</h2>
             {/* If loading is true -> LoadingBox */}
             {loading ? <LoadingBox></LoadingBox>
                 :
@@ -27,13 +28,16 @@ export default function HomeScreen() {
                 error ? <MessageBox variant="danger">{error}</MessageBox>
                     :
                     //else -> products
-                    <div className="row center">
-                        {/* This 'products' is from the backend */}
-                        {products.map(product => (
-                            <Product key={product._id} product={product}></Product>
-                        ))
-                        }
-                    </div>
+                    <>
+                        {products.length === 0 && <MessageBox>No Product Found</MessageBox>}
+                        <div className="row center">
+                            {/* This 'products' is from the backend */}
+                            {products.map(product => (
+                                <Product key={product._id} product={product}></Product>
+                            ))
+                            }
+                        </div>
+                    </>
             }
         </div>
     );
