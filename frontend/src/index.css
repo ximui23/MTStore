@@ -146,8 +146,14 @@ a.brand {
 .col-2{
   flex: 2 1 50rem;
 }
+.col-3{
+  flex: 32 1 75rem;
+}
 .min-30{
   min-width: 30rem;
+}
+.p-1{
+  padding: 1rem;
 }
 /* Aside */
 aside{
@@ -211,7 +217,8 @@ img.large{
 }
 
 .card-body{
-  padding: 2rem;
+  /* padding: 2rem; */
+  padding: 1rem;
 }
 
 .card-body > * {
@@ -261,7 +268,7 @@ img.large{
 /* Form */
 .form{
   max-width: 60rem;
-  margin: auto;
+  margin: 0 auto;
 }
 .form > div{
   display: flex;
@@ -394,4 +401,8 @@ img.large{
   border-radius: 0.5rem 0 0 0.5rem ;
   border-right: none;
   margin-left: 0.5rem;
+}
+
+.active{
+  font-weight: bold;
 }

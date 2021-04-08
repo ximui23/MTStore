@@ -33,14 +33,17 @@ export const listProductCategories = () => async (dispatch) => {
         dispatch({ type: PRODUCT_CATEGORY_LIST_FAIL, payload: error.message })
     }
 }
-export const listProductSearch = ({ name = '', category = '' }) => async (dispatch) => {
+export const listProductSearch = ({
+    name = '', category = '', order = '',
+    min = 0, max = 0, rating = 0,
+}) => async (dispatch) => {
     dispatch({
         type: PRODUCT_LIST_REQUEST
     });
 
     try {
         //getting data from backend
-        const { data } = await Axios.get(`/api/products?name=${name}&category=${category}`);
+        const { data } = await Axios.get(`/api/products?name=${name}&category=${category}&min=${min}&max=${max}&rating=${rating}&order=${order}`);
         //dispatch action: change state of redux
         //base on this we can update the homescreen and show products
         dispatch({ type: PRODUCT_LIST_SUCCESS, payload: data });
