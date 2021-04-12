@@ -6,6 +6,11 @@ import { isAdmin, isAuth } from '../utils.js'
 
 const productRouter = express.Router();
 
+// productRouter.get('/top-products', expressAsyncHandler(async (req, res) => {
+//     const topProducts = Product.find({});  //sort by product descending (-1)
+//     res.send(topProducts);
+// }));
+
 //creating api to send list of products to frontend
 // '/' will be added at the end of /api/products 
 productRouter.get('/', expressAsyncHandler(async (req, res) => {
@@ -108,6 +113,39 @@ productRouter.delete('/:id', isAuth, isAdmin, expressAsyncHandler(async (req, re
         res.send({ message: 'Product Deleted', product: deleteProduct });
     }
     else {
+        res.status(404).send({ message: 'Product Not Found' });
+    }
+}));
+
+//API for create a review
+productRouter.post('/:id/reviews', isAuth, expressAsyncHandler(async (req, res) => {
+    const productId = req.params.id;
+    //getting product from database
+    const product = await Product.findById(productId);
+
+    if (product) {
+        if (product.reviews.find(x => x.name === req.user.name)) {
+            return res.status(400).send({ message: 'Your already submitted a review' });
+        }
+
+        const review = { name: req.user.name, rating: Number(req.body.rating), comment: req.body.comment };
+
+        //adding this review to Review array using push command
+        product.reviews.push(review);
+        product.numReviews = product.reviews.length;
+        product.rating = product.reviews.reduce((a, c) => c.rating + a, 0) / product.reviews.length;
+
+        //save updated product
+        const updatedProduct = await product.save();
+
+        //send back this object to frontend
+        res.status(201).send({
+            message: 'Review Created',
+            review: updatedProduct.reviews[updatedProduct.reviews.length - 1]
+        });   //updated with the lated review
+    }
+    else {
+        //if product does not exist
         res.status(404).send({ message: 'Product Not Found' });
     }
 }));

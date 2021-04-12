@@ -51,6 +51,7 @@ h1{
 h2{
   font-size: 1.6rem;
   padding: 1rem 0;
+  padding-left: 2rem;
 }
 a{
   text-decoration: none;
@@ -141,13 +142,18 @@ a.brand {
 }
 .col-1{
   flex: 1 1 25rem;
-  padding-left: 2rem;
+  padding: 2rem;
 }
 .col-2{
-  flex: 2 1 50rem;
+  /* flex: flex-grow | flex-shrink | flex-basis */
+  flex: 2 1 50rem; 
 }
 .col-3{
   flex: 32 1 75rem;
+}
+.col.top{
+  flex: flex-start;
+  padding: 1rem;
 }
 .min-30{
   min-width: 30rem;
@@ -204,8 +210,8 @@ img.medium{
   width: 100%;
 }
 img.large{
-  width:90%;
-  padding-left: 2rem;
+  width:100%;
+  /* padding-left: 2rem; */
   /* Responsive purpose */
 }
 /* Card */
