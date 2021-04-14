@@ -41,6 +41,9 @@ app.use('/api/orders', orderRouter);
 app.get('/api/config/paypal', (req, res) => {
     res.send(process.env.PAYPAL_CLIENT_ID || 'sb'); // 'sb' - sandbox
 })
+app.get('/api/config/google', (req, res) => {
+    res.send(process.env.GOOGLE_API_KEY || ''); // 'sb' - sandbox
+})
 
 //show the images that upload to the '/uploads' folder
 const __dirname = path.resolve();

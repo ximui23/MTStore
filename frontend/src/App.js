@@ -10,6 +10,7 @@ import PrivateRoute from './components/PrivateRoute';
 import SearchBox from './components/SearchBox';
 import CartScreen from './screens/CartScreen';
 import HomeScreen from './screens/HomeScreen';
+import MapScreen from './screens/MapScreen';
 import OrderHistoryScreen from './screens/OrderHistoryScreen';
 import OrderListScreen from './screens/OrderListScreen';
 import OrderScreen from './screens/OrderScreen';
@@ -171,6 +172,7 @@ function App() {
           <AdminRoute path="/userlist" component={UserListScreen}></AdminRoute>
           <AdminRoute path="/user/:id/edit" component={UserEditScreen}></AdminRoute>
           <PrivateRoute path="/profile" component={ProfileScreen}></PrivateRoute>
+          <PrivateRoute path="/map" component={MapScreen}></PrivateRoute>
           <Route path="/" component={HomeScreen} exact></Route>
         </main>
         <footer className="row center">All right reserved</footer>
