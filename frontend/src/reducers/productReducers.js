@@ -16,7 +16,10 @@ export const productListReducer = (state = { loading: true, products: [] }, acti
         case PRODUCT_LIST_SUCCESS:
             //fetch products - variable from redux store
             // action.payload = data from backend from productAction.js
-            return { loading: false, products: action.payload };
+            return {
+                loading: false, products: action.payload.products, pages: action.payload.pages,
+                page: action.payload.page
+            };
         case PRODUCT_LIST_FAIL:
             return { loading: false, error: action.payload };
         default:

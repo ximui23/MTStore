@@ -14,6 +14,8 @@ const productRouter = express.Router();
 //creating api to send list of products to frontend
 // '/' will be added at the end of /api/products 
 productRouter.get('/', expressAsyncHandler(async (req, res) => {
+    const pageSize = 6;   //number of products per page
+    const page = Number(req.query.pageNumber) || 1;
     const name = req.query.name || '';
     const category = req.query.category || '';
     const order = req.query.order || '';
@@ -28,11 +30,19 @@ productRouter.get('/', expressAsyncHandler(async (req, res) => {
         : order === 'highest' ? { price: -1 }
             : order === 'topRated' ? { rating: -1 }
                 : { _id: -1 }; // order === newest -> sort it by id from newest upload
+
+    const count = await Product.count({
+        ...nameFilter,
+        ...categoryFilter, ...priceFilter, ...ratingFilter
+    });
     const products = await Product.find({
         ...nameFilter,
         ...categoryFilter, ...priceFilter, ...ratingFilter
-    }).sort(sortOrder); // find ({}) empty => return everything
-    res.send(products);
+    })
+        .sort(sortOrder)
+        .skip(pageSize * (page - 1))
+        .limit(pageSize); // find ({}) empty => return everything
+    res.send({ products, page, pages: Math.ceil(count / pageSize) });
 }));
 
 //API for getting categories from Product
