@@ -1,7 +1,7 @@
 import express from 'express';
 import expressAsyncHandler from 'express-async-handler';
 import Order from '../models/orderModel.js';
-import { isAuth, isAdmin } from '../utils.js';
+import { isAuth, isAdmin, mailgun, payOrderEmailTemplate } from '../utils.js';
 
 const orderRouter = express.Router();
 
@@ -60,7 +60,7 @@ orderRouter.get('/:id', isAuth, expressAsyncHandler(async (req, res) => {
 //update the status of payment -> put request 
 //second parameter 'isAuth' -> only logged in user can make payment
 orderRouter.put('/:id/pay', isAuth, expressAsyncHandler(async (req, res) => {
-    const order = await Order.findById(req.params.id);
+    const order = await Order.findById(req.params.id).populate('user', 'email name');
     if (order) {
         //if order exist
         order.isPaid = true;
@@ -72,6 +72,20 @@ orderRouter.put('/:id/pay', isAuth, expressAsyncHandler(async (req, res) => {
         };
         //save the updated order
         const updatedOrder = await order.save();
+        //Send email to user after successful payment
+        mailgun().messages().send({
+            from: 'Mia <miaschoice@mg.mias.com>',
+            to: `${order.user.name} <${order.user.email}>`,
+            subject: `New order ${order._id}`,
+            html: payOrderEmailTemplate(order),
+        }, (error, body) => {
+            if (error) {
+                console.log(error);
+            }
+            else {
+                console.log(body);
+            }
+        })
         res.send({ message: 'Order Paid', order: updatedOrder }); //second parameter: send back the order to frontend
     }
     else {
