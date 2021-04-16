@@ -60,7 +60,7 @@ function App() {
           </div>
           <div className="navbar">
             <Link to="/">Home</Link>
-            <Link to="/about">About</Link>
+            {/* <Link to="/about">About</Link> */}
             <Link to="/search/name">Products</Link>
           </div>
           <div>
